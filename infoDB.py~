@@ -1,0 +1,46 @@
+#!/usr/bin/python
+
+import mysql.connector
+from mysql.connector import Error
+#import pandas as pd
+
+#Establish connection with the server
+conn = mysql.connector.connect(
+   host="localhost",
+   user="root",
+   passwd="ALBARRACIN",
+   database="infoDB"
+)
+print(conn)
+print("MySQL Database connection successful")
+
+
+#Creating a cursor
+cursor = conn.cursor()
+
+#Preparing SQL Query
+insert_stmt = (
+   "INSERT INTO main_table(last_name, first_name, dob, id_number, sex)"
+   "VALUES (%s, %s, %s, %s, %s)"
+)
+data = ('Ramya', 'Ramapriya', '25/12/1978', 'F', '2333')
+
+
+try:
+   # Executing the SQL command
+   cursor.execute(insert_stmt, data)
+   
+   # Commit your changes in the database
+   conn.commit()
+
+except:
+   # Rolling back in case of error
+   conn.rollback()
+
+print("Data inserted")
+
+# Closing the connection
+conn.close()
+
+
+
